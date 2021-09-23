@@ -2,6 +2,7 @@ package main
 
 import (
 	"archive/zip"
+	"flag"
 	"fmt"
 	"io"
 	"io/fs"
@@ -12,14 +13,22 @@ import (
 	"github.com/zat-kaoru-hayama/go-msidb"
 )
 
+var flagAll = flag.Bool("a", false, "show all values")
+
 func showFile(arg string) error {
 	dict, err := msidb.Query(arg)
 	if err != nil {
 		return err
 	}
 	fmt.Printf("%s:\n", filepath.Base(arg))
-	for _, key := range []string{"ProductName", "ProductVersion"} {
-		fmt.Printf("%s=%s\n", key, dict[key])
+	if *flagAll {
+		for key, val := range dict {
+			fmt.Printf("%s=%s\n", key, val)
+		}
+	} else {
+		for _, key := range []string{"ProductName", "ProductVersion"} {
+			fmt.Printf("%s=%s\n", key, dict[key])
+		}
 	}
 	return nil
 }
@@ -114,7 +123,8 @@ func mains(args []string) error {
 }
 
 func main() {
-	if err := mains(os.Args[1:]); err != nil {
+	flag.Parse()
+	if err := mains(flag.Args()); err != nil {
 		fmt.Fprintln(os.Stderr, err.Error())
 		os.Exit(1)
 	}
