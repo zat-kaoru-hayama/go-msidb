@@ -15,25 +15,25 @@ import (
 
 var flagAll = flag.Bool("a", false, "show all values")
 
-func showFile(arg string) error {
+func showFile(arg string, w io.Writer) error {
 	dict, err := msidb.Query(arg)
 	if err != nil {
 		return err
 	}
-	fmt.Printf("%s:\n", filepath.Base(arg))
+	fmt.Fprintf(w, "%s:\n", filepath.Base(arg))
 	if *flagAll {
 		for key, val := range dict {
 			fmt.Printf("%s=%s\n", key, val)
 		}
 	} else {
 		for _, key := range []string{"ProductName", "ProductVersion"} {
-			fmt.Printf("%s=%s\n", key, dict[key])
+			fmt.Fprintf(w, "%s=%s\n", key, dict[key])
 		}
 	}
 	return nil
 }
 
-func showZip(arg string) error {
+func showZip(arg string, w io.Writer) error {
 	fd, err := os.Open(arg)
 	if err != nil {
 		return err
@@ -67,7 +67,7 @@ func showZip(arg string) error {
 			err = tmpMsiWriter.Close()
 			fmt.Print(recordSeperator)
 			if err == nil {
-				showFile(tmpMsiPath)
+				showFile(tmpMsiPath, w)
 			}
 			os.Remove(tmpMsiPath)
 			if err != nil {
@@ -79,12 +79,12 @@ func showZip(arg string) error {
 	return nil
 }
 
-func showDir(arg string) error {
+func showDir(arg string, w io.Writer) error {
 	recordSeparator := ""
 	return filepath.Walk(arg, func(path string, fi fs.FileInfo, _ error) error {
 		if strings.EqualFold(filepath.Ext(path), ".msi") && !fi.IsDir() {
-			fmt.Print(recordSeparator)
-			if err := showFile(path); err != nil {
+			fmt.Fprint(w, recordSeparator)
+			if err := showFile(path, w); err != nil {
 				return err
 			}
 			recordSeparator = "\n"
@@ -93,28 +93,28 @@ func showDir(arg string) error {
 	})
 }
 
-func showOne(arg string) error {
+func showOne(arg string, w io.Writer) error {
 	stat, err := os.Stat(arg)
 	if err != nil {
 		return err
 	}
 	if stat.IsDir() {
-		return showDir(arg)
+		return showDir(arg, w)
 	} else if strings.EqualFold(filepath.Ext(arg), ".zip") {
-		return showZip(arg)
+		return showZip(arg, w)
 	} else {
-		return showFile(arg)
+		return showFile(arg, w)
 	}
 }
 
-func mains(args []string) error {
+func mains(args []string, w io.Writer) error {
 	clean := msidb.CoInit()
 	defer clean()
 
 	recordSeparator := ""
 	for _, arg := range args {
-		fmt.Print(recordSeparator)
-		if err := showOne(arg); err != nil {
+		fmt.Fprint(w, recordSeparator)
+		if err := showOne(arg, w); err != nil {
 			return err
 		}
 		recordSeparator = "\n"
@@ -124,7 +124,7 @@ func mains(args []string) error {
 
 func main() {
 	flag.Parse()
-	if err := mains(flag.Args()); err != nil {
+	if err := mains(flag.Args(), os.Stdout); err != nil {
 		fmt.Fprintln(os.Stderr, err.Error())
 		os.Exit(1)
 	}
