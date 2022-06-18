@@ -1,5 +1,11 @@
+github.com/TheTitanrain/w32 v0.0.0-20180517000239-4f5cfb03fabf h1:FPsprx82rdrX2jiKyS17BH6IrTmUBYqZa/CXT4uvb+I=
+github.com/TheTitanrain/w32 v0.0.0-20180517000239-4f5cfb03fabf/go.mod h1:peYoMncQljjNS6tZwI9WVyQB3qZS6u79/N3mBOcnd3I=
 github.com/go-ole/go-ole v1.2.5 h1:t4MGB5xEDZvXI+0rMjjsfBsD7yAgp/s9ZDkL1JndXwY=
 github.com/go-ole/go-ole v1.2.5/go.mod h1:pprOEPIfldk/42T2oK7lQ4v4JSDwmV0As9GaiUsvbm0=
+github.com/mattn/msgbox v0.0.0-20170906002440-669fc0ad4d51 h1:mwbFlx48BwWB/EhRYMF2ddfFSPJKJt4whU89Oay+YYs=
+github.com/mattn/msgbox v0.0.0-20170906002440-669fc0ad4d51/go.mod h1:yw034Lj7L3R1c5PK+5wgId2p8GOMqhqMwpkW/kQBOvo=
+github.com/sqweek/dialog v0.0.0-20220504154117-be45b268883a h1:M4NnixT1bCxVc2LC3UDL1DBROoZGiewd9QGlYIIAMVc=
+github.com/sqweek/dialog v0.0.0-20220504154117-be45b268883a/go.mod h1:/qNPSY91qTz/8TgHEMioAUc6q7+3SOybeKczHMXFcXw=
 golang.org/x/sys v0.0.0-20190916202348-b4ddaad3f8a3/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
 golang.org/x/sys v0.0.0-20210923061019-b8560ed6a9b7 h1:c20P3CcPbopVp2f7099WLOqSNKURf30Z0uq66HpijZY=
 golang.org/x/sys v0.0.0-20210923061019-b8560ed6a9b7/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
