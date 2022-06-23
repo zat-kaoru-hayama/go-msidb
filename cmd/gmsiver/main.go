@@ -1,6 +1,7 @@
 package main
 
 import (
+	"os"
 	"strings"
 
 	"github.com/mattn/msgbox"
@@ -8,7 +9,7 @@ import (
 	"github.com/zat-kaoru-hayama/go-msidb/internal/msiver"
 )
 
-func show() string {
+func gShow() string {
 	target, err := dialog.File().Title("MSI,ZIP or folder").Load()
 	if err != nil {
 		return err.Error()
@@ -20,6 +21,20 @@ func show() string {
 	return buffer.String()
 }
 
+func show(args []string) string {
+	var buffer strings.Builder
+	if err := msiver.Show(args, &buffer); err != nil {
+		return err.Error()
+	}
+	return buffer.String()
+}
+
 func main() {
-	msgbox.Show(0, show(), "gMsiver", msgbox.OK)
+	var output string
+	if len(os.Args) >= 2 {
+		output = show(os.Args[1:])
+	} else {
+		output = gShow()
+	}
+	msgbox.Show(0, output, "gMsiver", msgbox.OK)
 }
