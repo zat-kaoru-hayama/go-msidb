@@ -24,4 +24,4 @@ package:
 	$(SET) "GOOS=windows" && $(SET) "GOARCH=amd64" && $(MAKE) _package
 
 manifest:
-	make-scoop-manifest *-windows-*.zip > $(NAME).json
+	make-scoop-manifest *-windows-*.zip > msiver.json
