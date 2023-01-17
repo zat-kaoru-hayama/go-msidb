@@ -1,4 +1,4 @@
-go-msiver
+go-msidb
 =========
 
 The golang library to get the version of the Windows Installer.
