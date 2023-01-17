@@ -12,8 +12,8 @@ endif
 
 all:
 	go fmt $(foreach X,$(wildcard internal/*),&& cd $(X) && go fmt && cd ../..)
-	cd cmd/msiver  && $(SET) "CGO_ENABLED=0" && go build -o ../../msiver.exe $(GOOPTC)
-	cd cmd/gmsiver && $(SET) "CGO_ENABLED=0" && go build -o ../../gmsiver.exe $(GOOPTG)
+	cd cmd/msiver  && go fmt && $(SET) "CGO_ENABLED=0" && go build -o ../../msiver.exe $(GOOPTC)
+	cd cmd/gmsiver && go fmt && $(SET) "CGO_ENABLED=0" && go build -o ../../gmsiver.exe $(GOOPTG)
 
 _package:
 	$(MAKE) all
