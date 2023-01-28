@@ -76,7 +76,6 @@ $
 ```
 
 ### (3) gMsiver
----------------
 
 ```
 $ gmsiver LZHFLDR.MSI
